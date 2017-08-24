@@ -3,12 +3,5 @@
     "es2015",
     "flow",
     "stage-2",
-  ],
-  "plugins": [
-    "transform-async-to-generator",
-    "transform-es2015-classes",
-    "babel-plugin-add-module-exports",
-    "transform-class-properties"
-  ],
-  "retainLines": true
+  ]
 }

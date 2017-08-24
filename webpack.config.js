@@ -1,20 +1,8 @@
 const fs = require('fs');
-const webpack = require('webpack');
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const path = require('path');
-const env = require('yargs').argv.env; // use --env with webpack 2
 
 let libraryName = 'Library';
-
-let plugins = [];
-let outputFile = null;
-
-if (env === 'build') {
-  plugins.push(new UglifyJsPlugin({ minimize: true }));
-  outputFile = libraryName + '.min.js';
-} else {
-  outputFile = libraryName + '.js';
-}
+let outputFile = libraryName + '.min.js';
 
 const nodeModules = {};
 fs.readdirSync('node_modules')
@@ -43,21 +31,21 @@ const config = {
         loader: 'babel-loader',
         exclude: /(node_modules)/,
         query: {
-          presets: ['es2015', 'stage-2']
+          presets: ['es2015', 'stage-2'],
+          plugins: [
+            require('babel-plugin-add-module-exports'),
+            require('babel-plugin-transform-async-to-generator'),
+            require('babel-plugin-transform-class-properties'),
+            require('babel-plugin-transform-es2015-classes')
+          ]
         }
-      },
-      {
-        test: /(\.jsx|\.js)$/,
-        loader: 'eslint-loader',
-        exclude: /(node_modules)/
       }
     ]
   },
   resolve: {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
     extensions: ['.json', '.js']
-  },
-  plugins: plugins
+  }
 };
 
 module.exports = config;

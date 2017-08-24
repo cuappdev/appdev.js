@@ -2,4 +2,11 @@
 
 ## Guidelines
 
-This library was built using boilerplate from: [`webpack-library-starter`](https://github.com/krasimir/webpack-library-starter).
+To build this, run the following:
+
+````bash
+npm run build
+````
+
+This will build the library for all `AppDev` projects that require this core
+functionality.
