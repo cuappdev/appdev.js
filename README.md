@@ -5,6 +5,7 @@
 To build this, run the following:
 
 ````bash
+npm install
 npm run build
 ````
 
