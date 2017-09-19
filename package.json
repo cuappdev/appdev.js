@@ -4,7 +4,8 @@
   "description": "AppDev core JS modules",
   "main": "lib/library.min.js",
   "scripts": {
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "prepublish": "webpack -p"
   },
   "devDependencies": {
     "axios": "^0.16.2",
