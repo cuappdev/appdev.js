@@ -2,7 +2,7 @@
   "name": "appdev",
   "version": "0.2.0",
   "description": "AppDev Core JS Modules",
-  "main": "lib/library.min.js",
+  "main": "lib/Library.min.js",
   "scripts": {
     "build": "node node_modules/webpack/bin/webpack.js --display-error-details -p",
     "prepublish": "node node_modules/webpack/bin/webpack.js --display-error-details -p"
