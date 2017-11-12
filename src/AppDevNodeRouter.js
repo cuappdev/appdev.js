@@ -1,7 +1,6 @@
 // @flow
 import { Request } from 'express';
 import AppDevRouter from './AppDevRouter';
-import type { RequestType } from './constants';
 
 type id = number
 
@@ -12,27 +11,21 @@ type id = number
  * type T: The type of nodes returned.
  */
 class AppDevNodeRouter<T> extends AppDevRouter {
-
-  constructor(type: RequestType) {
-    super(type);
-  }
-
   /** ABSTRACT: the subclass returns an entity */
-  async contentEntity(id: id): Promise<?T> {
-    throw new Error(`Not implemented for path ${this.getPath()}`)
+  async contentEntity (id: id): Promise<?T> {
+    throw new Error(`Not implemented for path ${this.getPath()}`);
   }
 
   /** @return the rendered content */
-  async content(req: Request) {
-
-    const id = parseInt(req.params.id)
-    if (isNaN(id)) throw new Error(`Invalid id ${req.params.id}`)
+  async content (req: Request) {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) throw new Error(`Invalid id ${req.params.id}`);
 
     const node: ?T = await this.contentEntity(id);
-    if (!node) throw new Error(`Could not fetch id:${req.params.id}`)
+    if (!node) throw new Error(`Could not fetch id:${req.params.id}`);
 
-    return { node }
+    return { node };
   }
 }
 
-export default AppDevNodeRouter
+export default AppDevNodeRouter;
