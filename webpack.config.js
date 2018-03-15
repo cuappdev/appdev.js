@@ -9,6 +9,7 @@ var config = {
   target: 'node',
   context: __dirname,
   externals: [nodeExternals()],
+  devtool: 'source-map',
   entry: ['babel-polyfill', path.join(__dirname, 'src/index.js')],
   output: {
     path: path.join(__dirname, '/lib'),

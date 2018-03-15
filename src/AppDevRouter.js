@@ -1,18 +1,18 @@
 // @flow
-// A REST-API Router parent that handles boilerplate for
-// serving up JSON responses based on HTTP verb
 
-import type {RequestType} from './constants';
+import AppDevUtilities from './AppDevUtilities';
+import { Router, Request, Response, NextFunction } from 'express';
 
-import {
-  Router,
-  Request,
-  Response,
-  NextFunction
-} from 'express';
+/**
+ * RequestType - the HTTP methods supported by AppDevRouter
+ */
+export type RequestType = 'GET' | 'POST' | 'DELETE';
 
-import constants from './constants';
-
+/**
+ * AppDevResponse - the response from an HTTP request
+ * 
+ * Wraps a `success` field around the response data
+ */
 class AppDevResponse {
   success: boolean;
   data: Object;
@@ -23,48 +23,66 @@ class AppDevResponse {
   }
 }
 
+/**
+ * AppDevRouter - cleanly create an Express Router object using inheritance
+ *
+ * Subclasses can simply specify the HTTP method, the path, and a response 
+ * hook to compute response data. This pattern is cleaner than raw Express 
+ * Router initialization with callbacks.
+ */
 class AppDevRouter {
   router: Router;
   requestType: RequestType;
 
-  getPath (): string {
-    throw new Error('You must implement getPath() with a valid path!');
-  }
-
-  constructor (type: RequestType) {
+  /**
+   * Subclasses must call this constructor and pass in the HTTP method
+   */
+  constructor(type: RequestType) {
     this.router = new Router();
     this.requestType = type;
 
     // Initialize this router
     this.init();
   }
+  
+  /**
+   * Subclasses must override this with the endpoint's URL. Paths must have 
+   * the format "/<path>/". The starting and ending slashes are mandatory.
+   */
+  getPath(): string {
+    throw new Error('You must implement getPath() with a valid path!');
+  }
 
-  init () {
+  /**
+   * Initialize the Express Router using the specified path and response hook
+   * implementation.
+   */
+  init() {
     const path = this.getPath();
 
-    // Error handle path
-    if (path.length < 2) {
-      throw new Error('Invalid path!');
-    } else if (path[0] !== '/') {
-      throw new Error('Path must start with a \'/\'!');
-    } else if (path[path.length - 1] !== '/') {
-      throw new Error('Path must end with a \'/\'!');
-    }
+    // Make sure path conforms to specification
+    AppDevUtilities.tryCheckAppDevURL(path);
 
     // Attach content to router
     switch (this.requestType) {
-    case constants.REQUEST_TYPES.GET:
+    case 'GET':
       this.router.get(path, this.response());
       break;
-    case constants.REQUEST_TYPES.POST:
+    case 'POST':
       this.router.post(path, this.response());
       break;
-    case constants.REQUEST_TYPES.DELETE:
+    case 'DELETE':
       this.router.delete(path, this.response());
       break;
+    default:
+      throw new Error("HTTP method not specified!");
     }
   }
 
+  /**
+   * Create a wrapper around the response hook to pass to the Express
+   * Router. 
+   */
   response() {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -80,6 +98,10 @@ class AppDevRouter {
     }
   } 
 
+  /**
+   * Subclasses must override this response hook to generate response data
+   * for the given request.
+   */
   async content (req: Request): Promise<any> {
     throw new Error(1);
   }
