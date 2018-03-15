@@ -54,29 +54,31 @@ class AppDevRouter {
     // Attach content to router
     switch (this.requestType) {
     case constants.REQUEST_TYPES.GET:
-      this.router.get(path, this.response);
+      this.router.get(path, this.response());
       break;
     case constants.REQUEST_TYPES.POST:
-      this.router.post(path, this.response);
+      this.router.post(path, this.response());
       break;
     case constants.REQUEST_TYPES.DELETE:
-      this.router.delete(path, this.response);
+      this.router.delete(path, this.response());
       break;
     }
   }
 
-  response = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const content = await this.content(req);
-      res.json(new AppDevResponse(true, content));
-    } catch (e) {
-      if (e.message === 1) {
-        throw new Error('You must implement content()!');
-      } else {
-        res.json(new AppDevResponse(false, {errors: [e.message]}));
+  response() {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const content = await this.content(req);
+        res.json(new AppDevResponse(true, content));
+      } catch (e) {
+        if (e.message === 1) {
+          throw new Error('You must implement content()!');
+        } else {
+          res.json(new AppDevResponse(false, {errors: [e.message]}));
+        }
       }
     }
-  }
+  } 
 
   async content (req: Request): Promise<any> {
     throw new Error(1);
