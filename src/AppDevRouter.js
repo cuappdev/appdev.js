@@ -44,14 +44,6 @@ class AppDevRouter {
     // Initialize this router
     this.init();
   }
-  
-  /**
-   * Subclasses must override this with the endpoint's URL. Paths must have 
-   * the format "/<path>/". The starting and ending slashes are mandatory.
-   */
-  getPath(): string {
-    throw new Error('You must implement getPath() with a valid path!');
-  }
 
   /**
    * Initialize the Express Router using the specified path and response hook
@@ -80,6 +72,22 @@ class AppDevRouter {
   }
 
   /**
+   * Subclasses must override this with the endpoint's URL. Paths must
+   * be an AppDev-formatted URL
+   */
+  getPath(): string {
+    throw new Error('You must implement getPath() with a valid path!');
+  }
+
+  /**
+   * Subclasses must override this response hook to generate response data
+   * for the given request.
+   */
+  async content (req: Request): Promise<any> {
+    throw new Error(1);
+  }
+
+  /**
    * Create a wrapper around the response hook to pass to the Express
    * Router. 
    */
@@ -98,13 +106,7 @@ class AppDevRouter {
     }
   } 
 
-  /**
-   * Subclasses must override this response hook to generate response data
-   * for the given request.
-   */
-  async content (req: Request): Promise<any> {
-    throw new Error(1);
-  }
+  
 }
 
 export default AppDevRouter;

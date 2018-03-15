@@ -6,48 +6,65 @@ import express, {Application, Router, Request, Response, NextFunction} from 'exp
  * ExpressHandlerFunction - the function signature of callbacks for Express
  * Router objects
  */
-export type ExpressHandlerFunction = (Request, Response, NextFunction) => any;
+export type ExpressCallback = (Request, Response, NextFunction) => any;
 
 /**
  * AppDevAPI - create an Express Application object from a series of middleware
  * and routers
  *
- * Use this as a way to cleanly and quickly create an Expression Application.
+ * Subclasses can specify the middleware and routers required for implementing
+ * the backend's API. This pattern is cleaner than than raw Express Application
+ * initialization with middleware functions and routers.
  */
 class AppDevAPI {
   express: Application;
-  rootPath: string;
-  middleware: Array<ExpressHandlerFunction>;
-  routers: Array<Router>;
 
   /**
-   * When constructing AppDevAPI objects, a client must provide the root path,
-   * the middleware, and the routers for the Express Application.
+   * Subclasses must call this constructor to set up the API
    */
-  constructor(
-    rootPath: string, 
-    middleware: Array<ExpressHandlerFunction>, 
-    routers: Array<Router>) {
-
+  constructor() {
     this.express = express();
-    this.rootPath = rootPath;
-    this.middleware = middleware;
-    this.middleware = routers;
+    this.init();
   }
 
   /**
-   * Initialize the Express Application object using the provided 
-   * parameters. 
+   * Initialize the Express Application object using the middleware
+   * and routers provided by the subclass.
    */
   init() {
-    AppDevUtilities.tryCheckAppDevURL(this.rootPath);
+    AppDevUtilities.tryCheckAppDevURL(this.getPath());
+    let middleware = this.middleware();
+    let routers = this.routers();
 
-    for (let i = 0; i < this.middleware.length; i++) {
-      this.app.use(this.middleware[i]);
+    for (let i = 0; i < middleware.length; i++) {
+      this.express.use(this.middleware[i]);
     }
 
-    for (let i = 0; i < this.routers.length; i++) {
-      this.app.use(this.rootPath, this.routers[i]);
+    for (let i = 0; i < routers.length; i++) {
+      this.express.use(this.rootPath, this.routers[i]);
     }
   }
+
+  /**
+   * Subclasses must override this with the API's URL. Paths must
+   * be an AppDev-formatted URL.
+   */
+  getPath(): string {
+    return '/';
+  }
+
+  /**
+   * Subclasses must override this to supply middleware for the API.
+   */
+  middleware(): Array<ExpressCallback> {
+    return [];
+  }
+
+  /**
+   * Subclasses must override this to supply middleware for the API.
+   */
+  routers(): Array<Router> {
+    return [];
+  }
+
 }

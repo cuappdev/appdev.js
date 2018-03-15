@@ -3,8 +3,13 @@
 // all AppDev projects
 import axios from 'axios';
 
+/**
+ * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is 
+ * either just a '/', or begins and ends with a `/`, and must have some 
+ * characters in between.
+ */
 const tryCheckAppDevURL = (path: string) => {
-  if (path.length < 2) {
+  if (path.length < 2 && path != '/') {
     throw new Error('Invalid path!');
   } else if (path[0] !== '/') {
     throw new Error('Path must start with a \'/\'!');
