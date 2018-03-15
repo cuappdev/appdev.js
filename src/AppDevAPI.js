@@ -20,16 +20,25 @@ class AppDevAPI {
   middleware: Array<ExpressHandlerFunction>;
   routers: Array<Router>;
 
+  /**
+   * When constructing AppDevAPI objects, a client must provide the root path,
+   * the middleware, and the routers for the Express Application.
+   */
   constructor(
     rootPath: string, 
     middleware: Array<ExpressHandlerFunction>, 
     routers: Array<Router>) {
+
     this.express = express();
     this.rootPath = rootPath;
     this.middleware = middleware;
     this.middleware = routers;
   }
 
+  /**
+   * Initialize the Express Application object using the provided 
+   * parameters. 
+   */
   init() {
     AppDevUtilities.tryCheckAppDevURL(this.rootPath);
 
