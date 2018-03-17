@@ -71,7 +71,7 @@ class AppDevAPI {
   /**
    * Get an HTTP server backed by the Express Application
    */
-  getServer():  {
+  getServer(): http.Server {
     const server: http.Server = http.createServer(api.app);
     const onError = (err: Error): void => {
         console.log(err);
