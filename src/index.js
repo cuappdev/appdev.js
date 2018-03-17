@@ -1,9 +1,10 @@
 // @flow
 import AppDevRouter from './AppDevRouter';
-
-import appDevUtils from './appDevUtils';
+import AppDevAPI from './AppDevAPI';
+import AppDevUtilities from './AppDevUtilities';
 
 export default {
   AppDevRouter,
-  appDevUtils
+  AppDevAPI,
+  AppDevUtilities
 };

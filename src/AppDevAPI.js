@@ -1,5 +1,6 @@
 // @flow
 
+import http from 'http'
 import express, {Application, Router, Request, Response, NextFunction} from 'express';
 
 /**
@@ -65,6 +66,24 @@ class AppDevAPI {
    */
   routers(): Array<Router> {
     return [];
+  }
+
+  /**
+   * Get an HTTP server backed by the Express Application
+   */
+  getServer():  {
+    const server: http.Server = http.createServer(api.app);
+    const onError = (err: Error): void => {
+        console.log(err);
+    };
+
+    const onListening = (): void => {
+        console.log(`Listening on ${server.address()}`);
+    };
+
+    server.on('error', onError);
+    server.on('listening', onListening);
+    return server;
   }
 
 }
