@@ -2,10 +2,12 @@
   "name": "appdev",
   "version": "0.3.0",
   "description": "AppDev Core JavaScript Modules",
-  "main": "lib/Library.min.js",
+  "main": "build/bundle.js",
   "scripts": {
-    "build": "node node_modules/webpack/bin/webpack.js --display-error-details -p",
-    "prepare": "node node_modules/webpack/bin/webpack.js --display-error-details -p"
+    "build": "webpack -p",
+    "flow": "node_modules/.bin/flow",
+    "flow-stop": "node_modules/.bin/flow stop",
+    "prepare": "webpack -p"
   },
   "keywords": [],
   "author": "Cornell AppDev",
@@ -14,7 +16,7 @@
     "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
-    "babel-polyfill": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "express": "^4.16.3",
@@ -23,6 +25,5 @@
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
     "webpack-node-externals": "^1.6.0"
-  },
-  "dependencies": {}
+  }
 }

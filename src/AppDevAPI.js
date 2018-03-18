@@ -2,6 +2,7 @@
 
 import http from 'http'
 import express, {Application, Router, Request, Response, NextFunction} from 'express';
+import AppDevUtilities from './AppDevUtilities';
 
 /**
  * ExpressHandlerFunction - the function signature of callbacks for Express
@@ -18,6 +19,7 @@ export type ExpressCallback = (Request, Response, NextFunction) => any;
  * initialization with middleware functions and routers.
  */
 class AppDevAPI {
+  
   express: Application;
 
   /**
@@ -38,11 +40,11 @@ class AppDevAPI {
     let routers = this.routers();
 
     for (let i = 0; i < middleware.length; i++) {
-      this.express.use(this.middleware[i]);
+      this.express.use(middleware[i]);
     }
 
     for (let i = 0; i < routers.length; i++) {
-      this.express.use(this.rootPath, this.routers[i]);
+      this.express.use(this.getPath(), routers[i]);
     }
   }
 
@@ -57,7 +59,7 @@ class AppDevAPI {
   /**
    * Subclasses must override this to supply middleware for the API.
    */
-  middleware(): Array<ExpressCallback> {
+  middleware(): Array<any> {
     return [];
   }
 
@@ -72,13 +74,15 @@ class AppDevAPI {
    * Get an HTTP server backed by the Express Application
    */
   getServer(): http.Server {
-    const server: http.Server = http.createServer(api.app);
+    const server: http.Server = http.createServer(this.express);
     const onError = (err: Error): void => {
-        console.log(err);
+      console.log(err);
     };
 
     const onListening = (): void => {
-        console.log(`Listening on ${server.address()}`);
+      let address = server.address().address;
+      let port = server.address().port;
+      console.log(`Listening on ${address}:${port}`);
     };
 
     server.on('error', onError);
@@ -87,3 +91,5 @@ class AppDevAPI {
   }
 
 }
+
+export default AppDevAPI;

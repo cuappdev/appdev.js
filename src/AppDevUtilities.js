@@ -9,7 +9,7 @@ import axios from 'axios';
  * characters in between.
  */
 const tryCheckAppDevURL = (path: string) => {
-  if (path.length < 2 && path != '/') {
+  if (path !== '/' && path.length < 2) {
     throw new Error('Invalid path!');
   } else if (path[0] !== '/') {
     throw new Error('Path must start with a \'/\'!');
@@ -51,6 +51,7 @@ const netIdFromEmail = (email: string): string => {
 };
 
 export default {
+  tryCheckAppDevURL,
   encodeUrlParams,
   googleAxios,
   insertIntoMySQLStatement,
