@@ -1,50 +1,27 @@
-const fs = require('fs');
-const path = require('path');
-
-let libraryName = 'Library';
-let outputFile = libraryName + '.min.js';
-
-const nodeModules = {};
-fs.readdirSync('node_modules')
-  .filter(function (x) {
-    return ['.bin'].indexOf(x) === -1;
-  })
-  .forEach(function (mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
+var fs = require('fs');
+var path = require('path');
+var nodeExternals = require('webpack-node-externals');
 
 const config = {
-  entry: ['babel-polyfill', path.join(__dirname, '/src/index.js')],
+  target: 'node',
+  context: __dirname,
+  externals: [nodeExternals()],
   devtool: 'source-map',
+  entry: [path.resolve(__dirname, 'src/index.js')],
   output: {
-    path: path.join(__dirname, '/lib'),
-    filename: outputFile,
-    library: libraryName,
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    library: 'appdev',
     libraryTarget: 'umd',
-    umdNamedDefine: true
   },
-  externals: nodeModules,
   module: {
     rules: [
       {
-        test: /\.js?$/,
-        loader: 'babel-loader',
-        exclude: /(node_modules)/,
-        query: {
-          presets: ['es2015', 'stage-2'],
-          plugins: [
-            require('babel-plugin-add-module-exports'),
-            require('babel-plugin-transform-async-to-generator'),
-            require('babel-plugin-transform-class-properties'),
-            require('babel-plugin-transform-es2015-classes')
-          ]
-        }
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       }
     ]
-  },
-  resolve: {
-    modules: [path.resolve('./node_modules'), path.resolve('./src')],
-    extensions: ['.json', '.js']
   }
 };
 
