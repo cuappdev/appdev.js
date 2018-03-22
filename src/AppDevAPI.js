@@ -1,7 +1,7 @@
 // @flow
 
 import http from 'http'
-import express, {Application, Router, Request, Response, NextFunction} from 'express';
+import express, { Application, Router, Request, Response, NextFunction } from 'express';
 import AppDevUtilities from './AppDevUtilities';
 
 /**

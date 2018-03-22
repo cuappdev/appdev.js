@@ -1,6 +1,13 @@
-var fs = require('fs');
-var path = require('path');
-var nodeExternals = require('webpack-node-externals');
+const fs = require('fs');
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const CreateFileWebpack = require('create-file-webpack')
+
+const flowTypeExport = {
+  path: './build',
+  fileName: 'bundle.js.flow',
+  content: '// @flow\nexport * from \'../src\';'
+}
 
 const config = {
   target: 'node',
@@ -22,7 +29,10 @@ const config = {
         loader: 'babel-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new CreateFileWebpack(flowTypeExport)
+  ]
 };
 
 module.exports = config;
