@@ -6,11 +6,12 @@ const config = {
   target: 'node',
   context: __dirname,
   externals: [nodeExternals()],
+  devtool: 'source-map',
   entry: [path.resolve(__dirname, 'src/index.js')],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    library: 'bundle',
+    library: 'appdev',
     libraryTarget: 'umd',
   },
   module: {

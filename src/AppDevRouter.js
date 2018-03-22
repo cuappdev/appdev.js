@@ -13,11 +13,11 @@ export type RequestType = 'GET' | 'POST' | 'DELETE';
  * 
  * Wraps a `success` field around the response data
  */
-class AppDevResponse {
+class AppDevResponse<T> {
   success: boolean;
-  data: Object;
+  data: T;
 
-  constructor (success: boolean, data: Object) {
+  constructor (success: boolean, data: T) {
     this.success = success;
     this.data = data;
   }
@@ -30,7 +30,7 @@ class AppDevResponse {
  * hook to compute response data. This pattern is cleaner than raw Express 
  * Router initialization with callbacks.
  */
-class AppDevRouter {
+class AppDevRouter<T> {
   router: Router;
   requestType: RequestType;
 
@@ -83,7 +83,7 @@ class AppDevRouter {
    * Subclasses must override this response hook to generate response data
    * for the given request.
    */
-  async content (req: Request): Promise<any> {
+  async content (req: Request): Promise<T> {
     throw new Error(1);
   }
 
@@ -103,6 +103,7 @@ class AppDevRouter {
           res.json(new AppDevResponse(false, {errors: [e.message]}));
         }
       }
+      next();
     }
   } 
 
