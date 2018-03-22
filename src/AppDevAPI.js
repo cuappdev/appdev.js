@@ -59,7 +59,7 @@ class AppDevAPI {
   /**
    * Subclasses must override this to supply middleware for the API.
    */
-  preMiddleware(): Array<any> {
+  middleware(): Array<any> {
     return [];
   }
 
@@ -67,13 +67,6 @@ class AppDevAPI {
    * Subclasses must override this to supply middleware for the API.
    */
   routers(): Array<Router> {
-    return [];
-  }
-
-  /**
-   * Subclasses must override this to supply middleware for the API.
-   */
-  preMiddleware(): Array<any> {
     return [];
   }
 
