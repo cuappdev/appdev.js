@@ -13,18 +13,21 @@
   "author": "Cornell AppDev",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "create-file-webpack": "^1.0.0",
-    "express": "^4.16.3",
     "flow-bin": "^0.67.1",
-    "http": "0.0.0",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
     "webpack-node-externals": "^1.6.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "moment": "^2.21.0"
   }
 }

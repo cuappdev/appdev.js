@@ -59,14 +59,14 @@ class AppDevAPI {
   /**
    * Subclasses must override this to supply middleware for the API.
    */
-  middleware(): Array<any> {
+  middleware(): ExpressCallback[] {
     return [];
   }
 
   /**
    * Subclasses must override this to supply middleware for the API.
    */
-  routers(): Array<Router> {
+  routers(): Router[] {
     return [];
   }
 
