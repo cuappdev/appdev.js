@@ -2,6 +2,17 @@
 
 This is an NPM package in which we store our shared JavaScript code. These abstractions are usually common to all our JavaScript backends.
 
+* AppDevRouter - an abstraction for Express routers
+* AppDevAPI - an abstraction of an Express web API
+* RegisterSession - an abstraction of the Register tool
+
+## Install
+
+To install the latest version of this package into your Node.js project, run the following in the root of your project
+```
+npm install git+https://github.com/cuappdev/appdev.js.git
+```
+
 ## Build
 
 To build, run the following:
