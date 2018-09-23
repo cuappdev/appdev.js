@@ -13,9 +13,9 @@ class ChronicleSession {
   s3: S3;
 
   constructor(
-    accessKey: string, 
-    secretKey: string, 
-    app: string, 
+    accessKey: string,
+    secretKey: string,
+    app: string,
     cacheSize: number = 10,
   ) {
     this.app = app;
@@ -56,7 +56,7 @@ class ChronicleSession {
     if (logs == undefined) {
       this.logMap.set(eventName, [event]);
       return;
-    } 
+    }
 
     logs.push(event);
     this.logMap.set(eventName, logs);

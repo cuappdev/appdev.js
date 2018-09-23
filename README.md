@@ -1,6 +1,7 @@
 # AppDev Core JavaScript Libraries
 
-This is an NPM package in which we store our shared JavaScript code. These abstractions are usually common to all our JavaScript backends.
+here is a line
+
 
 * AppDevRouter - an abstraction for Express routers
 * AppDevAPI - an abstraction of an Express web API
