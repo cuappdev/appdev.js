@@ -4,6 +4,7 @@ This is an NPM package in which we store our shared JavaScript code. These abstr
 
 * AppDevRouter - an abstraction for Express routers
 * AppDevAPI - an abstraction of an Express web API
+* ChronicleSession - an abstraction of the Chronicle logging tool
 * RegisterSession - an abstraction of the Register tool
 
 ## Install

@@ -1,6 +1,6 @@
 // @flow
 import { config, S3 } from 'aws-sdk';
-import { ParquetWriter, ParquetSchema } from 'parquetjs'
+import { ParquetWriter, ParquetSchema } from 'parquetjs';
 import { createReadStream } from 'fs';
 
 const PATH = '/tmp';
