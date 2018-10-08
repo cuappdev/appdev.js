@@ -10,7 +10,7 @@ class ChronicleSession {
   app: string;
   cacheSize: number;
   logMap: Map<string, Object[]>;
-  s3: S3; 
+  s3: S3;
 
   constructor(
     accessKey: string, 
@@ -57,6 +57,7 @@ class ChronicleSession {
       this.logMap.set(eventName, [event]);
       logs = [];
     }
+    
     logs.push(event);
     this.logMap.set(eventName, logs);
     if (logs.length >= this.cacheSize) {
