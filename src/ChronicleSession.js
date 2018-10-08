@@ -34,9 +34,9 @@ class ChronicleSession {
     const schema = new ParquetSchema(eventType);
     const writer = await ParquetWriter.openFile(schema, `${PATH}/${filename}`);
 
-    const logs = this.logMap.get(eventName);
+    let logs = this.logMap.get(eventName);
     if (logs == undefined) { // sanity check
-      return;
+      logs = [];
     }
 
     logs.forEach(log => writer.appendRow(log));
@@ -52,12 +52,12 @@ class ChronicleSession {
   }
 
   async log(eventName: string, eventType: ParquetSchema, event: Object) {
-    const logs = this.logMap.get(eventName);
+    let logs = this.logMap.get(eventName);
     if (logs == undefined) {
       this.logMap.set(eventName, [event]);
-      return;
-    } 
-
+      logs = [];
+    }
+    
     logs.push(event);
     this.logMap.set(eventName, logs);
     if (logs.length >= this.cacheSize) {
