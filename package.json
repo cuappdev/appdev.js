@@ -1,6 +1,6 @@
 {
   "name": "appdev",
-  "version": "0.5.3",
+  "version": "1.0.0",
   "description": "AppDev Core JavaScript Modules",
   "main": "build/bundle.js",
   "scripts": {
