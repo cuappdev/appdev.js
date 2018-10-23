@@ -1,7 +1,6 @@
 // @flow
 // General utility functions / Objects helpful in a JS setting across
 // all AppDev projects
-import request from 'request';
 
 /**
  * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is
@@ -23,11 +22,6 @@ const encodeUrlParams = (params: { [string]: any }): string => {
     return `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`;
   }).join('&');
 };
-
-const googleAPIsRequest = request.defaults({
-  baseUrl: 'https://www.googleapis.com',
-  timeout: 5000
-});
 
 const insertIntoMySQLStatement = (
   tableName: string,
@@ -53,7 +47,6 @@ const netIdFromEmail = (email: string): string => {
 export default {
   tryCheckAppDevURL,
   encodeUrlParams,
-  googleAPIsRequest,
   insertIntoMySQLStatement,
   netIdFromEmail
 };
