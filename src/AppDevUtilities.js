@@ -1,11 +1,11 @@
 // @flow
 // General utility functions / Objects helpful in a JS setting across
 // all AppDev projects
-import axios from 'axios';
+import request from 'request';
 
 /**
- * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is 
- * either just a '/', or begins and ends with a `/`, and must have some 
+ * Check if a string is an AppDev-formatted URL. An AppDev formatted URL is
+ * either just a '/', or begins and ends with a `/`, and must have some
  * characters in between.
  */
 const tryCheckAppDevURL = (path: string) => {
@@ -16,7 +16,7 @@ const tryCheckAppDevURL = (path: string) => {
   } else if (path[path.length - 1] !== '/') {
     throw new Error('Path must end with a \'/\'!');
   }
-}
+};
 
 const encodeUrlParams = (params: { [string]: any }): string => {
   return Object.keys(params).map((k: string) => {
@@ -24,8 +24,8 @@ const encodeUrlParams = (params: { [string]: any }): string => {
   }).join('&');
 };
 
-const googleAxios = axios.create({
-  baseURL: 'https://www.googleapis.com',
+const googleAPIsRequest = request.defaults({
+  baseUrl: 'https://www.googleapis.com',
   timeout: 5000
 });
 
@@ -53,7 +53,7 @@ const netIdFromEmail = (email: string): string => {
 export default {
   tryCheckAppDevURL,
   encodeUrlParams,
-  googleAxios,
+  googleAPIsRequest,
   insertIntoMySQLStatement,
   netIdFromEmail
 };
