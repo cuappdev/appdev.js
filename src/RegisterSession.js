@@ -1,6 +1,6 @@
 // @flow
-import axios from 'axios';
 import moment from 'moment';
+import request from 'request';
 
 export type RegisterEvent = {
   event_type: string,
@@ -13,7 +13,7 @@ class RegisterSession {
   secretKey: string;
   cache: RegisterEvent[];
   cacheSize: number;
-  
+
   constructor(apiUrl: string, secretKey: string, cacheSize: number = 10) {
     this.apiUrl = apiUrl;
     this.secretKey = secretKey;
@@ -27,16 +27,21 @@ class RegisterSession {
     timestamp: string = moment.utc().format('YYYY-MM-DD HH:mm:ss.ms')
   ): RegisterEvent {
     return ({event_type, payload, timestamp});
-  } 
+  }
 
   sendEvents() {
-    axios.post(
-        this.apiUrl + '/api/events/create/', 
-        { events: this.cache }, 
-        { headers: { 'Authorization': `Bearer ${this.secretKey}` } })
-      .then(response => {
+    const options = {
+      method: 'POST',
+      url: this.apiUrl + '/api/events/create/',
+      headers:
+          {
+            'Authorization': `Bearer ${this.secretKey}`
+          },
+      json: { events: this.cache },
+    };
+    request(options, (error, response, body) => {
         console.log(JSON.stringify(response.data.data));
-      });
+    });
     this.cache = [];
   }
 
