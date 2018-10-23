@@ -9,28 +9,32 @@
     "flow-stop": "node_modules/.bin/flow stop",
     "prepare": "webpack -p"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuappdev/appdev.js.git"
+  },
   "keywords": [],
   "author": "Cornell AppDev",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "create-file-webpack": "^1.0.0",
     "flow-bin": "^0.67.1",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12",
-    "webpack-node-externals": "^1.6.0"
+    "webpack": "^4.22.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.319.0",
+    "aws-sdk": "^2.340.0",
     "axios": "^0.18.0",
     "babel-runtime": "^6.26.0",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "http": "0.0.0",
-    "moment": "^2.21.0",
-    "parquetjs": "^0.7.0"
+    "moment": "^2.22.2",
+    "parquetjs": "git+https://github.com/zeladada/parquetjs.git#84f5bba7b8dfc7837e2e508f45cbf9ae1675d624"
   }
 }
