@@ -19,7 +19,7 @@ export type ExpressCallback = (Request, Response, NextFunction) => any;
  * initialization with middleware functions and routers.
  */
 class AppDevAPI {
-  
+
   express: Application;
 
   /**
@@ -73,7 +73,7 @@ class AppDevAPI {
   /**
    * Get an HTTP server backed by the Express Application
    */
-  getServer(): http.Server {
+  getServer(verbose: ?boolean = true): http.Server {
     const server: http.Server = http.createServer(this.express);
     const onError = (err: Error): void => {
       console.log(err);
@@ -82,7 +82,7 @@ class AppDevAPI {
     const onListening = (): void => {
       let address = server.address().address;
       let port = server.address().port;
-      console.log(`Listening on ${address}:${port}`);
+      verbose && console.log(`Listening on ${address}:${port}`);
     };
 
     server.on('error', onError);
