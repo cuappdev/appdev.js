@@ -13,9 +13,9 @@ class ChronicleSession {
   s3: S3;
 
   constructor(
-    accessKey: string, 
-    secretKey: string, 
-    app: string, 
+    accessKey: string,
+    secretKey: string,
+    app: string,
     cacheSize: number = 10,
   ) {
     this.app = app;
@@ -35,7 +35,7 @@ class ChronicleSession {
     const writer = await ParquetWriter.openFile(schema, `${PATH}/${filename}`);
 
     let logs = this.logMap.get(eventName);
-    if (logs == undefined) { // sanity check
+    if (logs === undefined) { // sanity check
       logs = [];
     }
 
@@ -53,11 +53,11 @@ class ChronicleSession {
 
   async log(eventName: string, eventType: ParquetSchema, event: Object) {
     let logs = this.logMap.get(eventName);
-    if (logs == undefined) {
+    if (logs === undefined) {
       this.logMap.set(eventName, [event]);
       logs = [];
     }
-    
+
     logs.push(event);
     this.logMap.set(eventName, logs);
     if (logs.length >= this.cacheSize) {
